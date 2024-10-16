@@ -156,3 +156,7 @@ cython_debug/
 
 .idea/
 config/
+proba.py
+Patient/migrations
+Doctor/migrations
+db.sqlite3

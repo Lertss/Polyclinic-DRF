@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+
+from cryptography.fernet import Fernet
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -29,13 +31,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
+SECURED_FIELDS_KEY = os.getenv('ENCRYPTION_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = []
-
+AUTH_USER_MODEL = 'Patient.CustomUser'
 
 # Application definition
 
@@ -46,6 +49,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'drf_spectacular',
+    'phonenumber_field',
+    'secured_fields',
+
+
+    'Doctor',
+    'Patient',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +142,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+REST_FRAMEWORK = {
+    # YOUR SETTINGS
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+
