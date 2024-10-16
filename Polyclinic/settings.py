@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 
-from cryptography.fernet import Fernet
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -51,7 +50,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'drf_spectacular',
-    'phonenumber_field',
     'secured_fields',
 
 

@@ -1,10 +1,10 @@
 import uuid
 from django.contrib.auth.models import AbstractUser
-from django.db import models, transaction
+from django.db import models
 
 import secured_fields
 from django.utils import timezone
-
+from django.contrib.auth.hashers import make_password
 
 OPTIONS_GENDER = (
     ('Male', 'Male'),
@@ -30,13 +30,18 @@ class CustomUser(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     first_name = secured_fields.EncryptedCharField(max_length=50, searchable=True)
     last_name = secured_fields.EncryptedCharField(max_length=50, searchable=True)
-    phone_number = secured_fields.EncryptedCharField(max_length=10, unique=True)
+    phone_number = secured_fields.EncryptedCharField(max_length=10, unique=True, searchable=True)
     email = secured_fields.EncryptedCharField(max_length=255, unique=True)
     gender = secured_fields.EncryptedCharField(max_length=20, choices=OPTIONS_GENDER, blank=False, null=False)
     birth_date = secured_fields.EncryptedDateField()
     created_at = secured_fields.EncryptedDateTimeField(default=timezone.now, editable=False)
     is_active = models.BooleanField(default=False)
 
+    def save(self, *args, **kwargs):
+        # Check if the password is set and not already hashed
+        if self.password and not self.password.startswith('pbkdf2_sha256$'):
+            self.password = make_password(self.password)
+        super().save(*args, **kwargs)
 
 
 
