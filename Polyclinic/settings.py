@@ -15,8 +15,9 @@ import os
 
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
-load_dotenv()
+# Load environment variables from .env.postgres file
+load_dotenv("env_file/.env.postgres")
+load_dotenv("env_file/.env.app")
 
 # Access environment variables
 
@@ -51,7 +52,6 @@ INSTALLED_APPS = [
 
     'drf_spectacular',
     'secured_fields',
-
 
     'Doctor',
     'Patient',
@@ -93,9 +93,13 @@ WSGI_APPLICATION = 'Polyclinic.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": f"{os.getenv('POSTGRES_DB')}",
+        "USER":  f"{os.getenv('POSTGRES_USER')}",
+        "PASSWORD":  f"{os.getenv('POSTGRES_PASSWORD')}",
+        "HOST":  f"{os.getenv('POSTGRES_HOST')}",
+        "PORT":  f"{os.getenv('POSTGRES_PORT')}",
     }
 }
 
