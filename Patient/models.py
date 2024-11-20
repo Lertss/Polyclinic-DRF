@@ -51,7 +51,7 @@ class Patient(models.Model):
        Only after creating the CustomUser model and confirming the number can you create a patient profile
     """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, editable=False)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     region = secured_fields.EncryptedCharField(max_length=50)
     neighborhood = secured_fields.EncryptedCharField(max_length=50)
     city = secured_fields.EncryptedCharField(max_length=50)
@@ -79,8 +79,8 @@ class Record(models.Model):
     updated_at = secured_fields.EncryptedDateTimeField(default=timezone.now, editable=False)
     file_analysis = secured_fields.EncryptedFileField(upload_to='record/', blank=True, null=True)
 
-    # def save(self, *args, **kwargs):
-    #     """Check whether the doctor and patient are the same user"""
-    #     if self.doctor.user == self.patient.user:
-    #         raise ValueError("A doctor cannot create a record for himself/herself.")
-    #     super().save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        """Check whether the doctor and patient are the same user"""
+        if self.doctor_autohor.user == self.patient.user:
+            raise ValueError("A doctor cannot create a record for himself/herself.")
+        super().save(*args, **kwargs)
