@@ -1,6 +1,6 @@
 import uuid
 
-from django.db import models, transaction
+from django.db import models
 from django.utils.translation import gettext_lazy as _
 from Patient.models import CustomUser
 
@@ -24,7 +24,7 @@ class Doctor(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     specialty = models.CharField(max_length=100,null=False, blank=False)
-    phone_general = models.CharField(max_length=10,null=False, blank=False)
+    phone_general = models.CharField(null=False, blank=False)
     cabinet = models.CharField(max_length=6, null=False, blank=False)
 
 
