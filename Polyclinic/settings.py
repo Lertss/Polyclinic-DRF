@@ -32,7 +32,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
 SECURED_FIELDS_KEY = os.getenv('ENCRYPTION_KEY')
-
+SECURED_FILDS_HASH_SALT = os.getenv('SECURED_FILDS_HASH')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG')
