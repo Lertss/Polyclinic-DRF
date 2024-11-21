@@ -33,16 +33,16 @@ class Doctor(models.Model):
 class OpeningHours(models.Model):
     """Model of doctor's appointment times"""
     weekday = models.IntegerField(choices=WEEKDAYS)
-    from_hour = models.TimeField()
-    to_hour = models.TimeField()
+    open_hour = models.TimeField()
+    close_hour = models.TimeField()
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ('weekday', 'from_hour')
-        unique_together = ('weekday', 'from_hour', 'to_hour')
+        ordering = ('weekday', 'open_hour')
+        unique_together = ('weekday', 'open_hour', 'close_hour')
 
     def __unicode__(self):
         return u'%s: %s - %s' % (self.get_weekday_display(),
-                                 self.from_hour, self.to_hour)
+                                 self.open_hour, self.close_hour)
 
 
