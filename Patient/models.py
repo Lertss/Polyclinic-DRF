@@ -24,7 +24,7 @@ OPTIONS_BLOOD = (
 )
 
 
-# add activation via phone confirmation
+#TODO: add activation via phone confirmation
 class CustomUser(AbstractUser):
     """Model of the main user"""
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
