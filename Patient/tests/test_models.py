@@ -173,11 +173,6 @@ class PatientModelTest(TestCase):
 
 
 
-from django.core.files.base import ContentFile
-
-
-
-
 class TestRecordModel(TestCase):
     def setUp(self):
         """Створення тестових даних"""

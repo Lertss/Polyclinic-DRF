@@ -38,7 +38,6 @@ SECURED_FILDS_HASH_SALT = os.getenv('SECURED_FILDS_HASH')
 DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = []
-AUTH_USER_MODEL = 'Patient.CustomUser'
 
 # Application definition
 
@@ -51,6 +50,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'drf_spectacular',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'djoser',
     'secured_fields',
 
     'Doctor',
@@ -146,9 +148,29 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+AUTH_USER_MODEL = 'Patient.CustomUser'
+
+
 REST_FRAMEWORK = {
-    # YOUR SETTINGS
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
+
+DJOSER = {
+    "EMAIL_FRONTEND_DOMAIN": "example.com", #replaces the domain in URLs sent in emails.
+    "USERNAME_RESET_CONFIRM_URL": "password/reset/confirm/{uid}/{token}",
+    "PASSWORD_RESET_CONFIRM_URL": "email/reset/confirm/{uid}/{token}",
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'SEND_CONFIRMATION_EMAIL':True,
+    "SERIALIZERS":{
+        'user_create':'Patient.serializers.CustomUserCreatePasswordRetypeSerializer',
+        'user':'Patient.serializers.CustomUserCreatePasswordRetypeSerializer',
+    },
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
