@@ -59,7 +59,7 @@ class Patient(models.Model):
     house = secured_fields.EncryptedCharField(max_length=50, null=True)
     apartment = secured_fields.EncryptedCharField(max_length=50, null=True)
     allergy = secured_fields.EncryptedTextField(max_length=50)
-    blood_type = secured_fields.EncryptedCharField(max_length=50, choices=OPTIONS_GENDER, blank=False, null=False)
+    blood_type = secured_fields.EncryptedCharField(max_length=50, choices=OPTIONS_BLOOD, blank=False, null=False)
     medical_insurance_number = secured_fields.EncryptedCharField(max_length=20,
                                                                  blank=True,
                                                                  null=True,
